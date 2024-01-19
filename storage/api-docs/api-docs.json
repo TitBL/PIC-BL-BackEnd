@@ -1,0 +1,2150 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Aplicativo Web para la Centralización de Documentos Electrónicos Tributarios",
+        "contact": {
+            "name": "Rafael Larrea",
+            "email": "jrafael1108@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Autorización"
+                ],
+                "summary": "Verifica si el usuario tiene acceso al sistema retornando un token de acceso",
+                "operationId": "222b2625838e3c57e017987f73598fda",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "dni": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "pwd": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/refresh": {
+            "post": {
+                "tags": [
+                    "Autorización"
+                ],
+                "summary": "Actualiza el token de acceso utilizando un token de actualización válido.",
+                "operationId": "refresh",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "refresh_token": {
+                                        "description": "El token de actualización",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/documento/list/recibidos/consumidor": {
+            "get": {
+                "tags": [
+                    "Documento"
+                ],
+                "summary": "Obtiene una lista de documentos recibidos para el consumidor.",
+                "operationId": "85b896671f2eaa51228f185255bb2983",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "IdUsuario": {
+                                        "type": "integer"
+                                    },
+                                    "FechaDesde": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "FechaHasta": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/documento/list/emitidos/empresa": {
+            "get": {
+                "tags": [
+                    "Documento"
+                ],
+                "summary": "Obtiene una lista de documentos emitidos por la empresa.",
+                "operationId": "72b91735621fca37efa1b77bca2d58b5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "IdEmpresa": {
+                                        "type": "integer"
+                                    },
+                                    "FechaDesde": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "FechaHasta": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/documento/list/recibidos/empresa": {
+            "get": {
+                "tags": [
+                    "Documento"
+                ],
+                "summary": "Obtiene una lista de documentos recibidos para la empresa.",
+                "operationId": "c6003fdb9a908438cb2044c8fb5dc903",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "IdEmpresa": {
+                                        "type": "integer"
+                                    },
+                                    "FechaDesde": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "FechaHasta": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/documento/visualizar/pdf/{id}": {
+            "get": {
+                "tags": [
+                    "Documento"
+                ],
+                "summary": "Visualizar PDF",
+                "operationId": "10248a01eb87dce6a63b1d2f36fbca03",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de transaccion, clave de acceso",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la Documento"
+                    },
+                    "404": {
+                        "description": "Documento no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/documento/descargar/pdf/{id}": {
+            "get": {
+                "tags": [
+                    "Documento"
+                ],
+                "summary": "Desacargar PDF",
+                "operationId": "d87cea2ec0b282f7d596c3b5b3ca624a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de transaccion, clave de acceso",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la Documento"
+                    },
+                    "404": {
+                        "description": "Documento no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/documento/visualizar/xml/{id}": {
+            "get": {
+                "tags": [
+                    "Documento"
+                ],
+                "summary": "Obtener detalles de una Documento por ID",
+                "operationId": "96d067aba523336f3b16ab4dae41fc91",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de transaccion, clave de acceso ",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la Documento"
+                    },
+                    "404": {
+                        "description": "Documento no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/documento/descargar/xml/{id}": {
+            "get": {
+                "tags": [
+                    "Documento"
+                ],
+                "summary": "Desacargar xml",
+                "operationId": "b9971c60dee6fe94cf0d0177d281c94f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de transaccion, clave de acceso",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la Documento"
+                    },
+                    "404": {
+                        "description": "Documento no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/empresa/list/{estado}": {
+            "get": {
+                "tags": [
+                    "Empresa"
+                ],
+                "summary": "Obtiene una lista de empresas por estado.",
+                "operationId": "3def7937343e0598fa974ec530e7ce30",
+                "parameters": [
+                    {
+                        "name": "estado",
+                        "in": "path",
+                        "description": "Filtra la empresa por estado.",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/empresa/api_key": {
+            "get": {
+                "tags": [
+                    "Empresa"
+                ],
+                "summary": "Obtiene una lista de empresas por busqueda.",
+                "operationId": "b552525ce27eb7ebb62085b40f58f74b",
+                "responses": {
+                    "400": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/empresa/buscar/{filtro}": {
+            "get": {
+                "tags": [
+                    "Empresa"
+                ],
+                "summary": "Obtiene una lista de empresas por busqueda.",
+                "operationId": "883f87c4a0c05542daaaeb55fe390ac6",
+                "parameters": [
+                    {
+                        "name": "filtro",
+                        "in": "path",
+                        "description": "Filtra la empresa por ruc, razon_social, nombre_comercial.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/empresa/{id}": {
+            "get": {
+                "tags": [
+                    "Empresa"
+                ],
+                "summary": "Obtener detalles de una empresa por ID",
+                "operationId": "0aae62a86426eb3f6c666da4bdae026c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la empresa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la empresa"
+                    },
+                    "404": {
+                        "description": "Empresa no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Empresa"
+                ],
+                "summary": "Actualiza la entidad empresa",
+                "operationId": "5efb82a74a0398d20204102e2752899b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la empresa a actualizar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "NombreComercial": {
+                                        "type": "string"
+                                    },
+                                    "PuedeEnviarCorreo": {
+                                        "type": "boolean",
+                                        "example": 0
+                                    },
+                                    "UsaConfiguracionSMTP": {
+                                        "type": "boolean",
+                                        "example": 0
+                                    },
+                                    "Email": {
+                                        "type": "string"
+                                    },
+                                    "Servidor": {
+                                        "type": "string"
+                                    },
+                                    "Puerto": {
+                                        "type": "integer"
+                                    },
+                                    "TipoSeguridad": {
+                                        "type": "integer",
+                                        "example": 0
+                                    },
+                                    "UsuarioSMTP": {
+                                        "type": "string"
+                                    },
+                                    "PasswordSMTP": {
+                                        "type": "string"
+                                    },
+                                    "APIKey": {
+                                        "type": "string"
+                                    },
+                                    "Logo": {
+                                        "type": "string"
+                                    },
+                                    "IdUsuario": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/empresa/": {
+            "post": {
+                "tags": [
+                    "Empresa"
+                ],
+                "summary": "Crear una nueva empresa",
+                "operationId": "0dc2d8c3fac74dce0b488b585dd226a5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "RUC": {
+                                        "type": "string"
+                                    },
+                                    "RazonSocial": {
+                                        "type": "string"
+                                    },
+                                    "NombreComercial": {
+                                        "type": "string"
+                                    },
+                                    "PuedeEnviarCorreo": {
+                                        "type": "boolean",
+                                        "example": 0
+                                    },
+                                    "UsaConfiguracionSMTP": {
+                                        "type": "boolean",
+                                        "example": 0
+                                    },
+                                    "Email": {
+                                        "type": "string"
+                                    },
+                                    "Servidor": {
+                                        "type": "string"
+                                    },
+                                    "Puerto": {
+                                        "type": "integer"
+                                    },
+                                    "TipoSeguridad": {
+                                        "type": "integer",
+                                        "example": 0
+                                    },
+                                    "UsuarioSMTP": {
+                                        "type": "string"
+                                    },
+                                    "PasswordSMTP": {
+                                        "type": "string"
+                                    },
+                                    "APIKey": {
+                                        "type": "string"
+                                    },
+                                    "Logo": {
+                                        "type": "string"
+                                    },
+                                    "IdUsuario": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/empresa/deshabilitar/{id}": {
+            "post": {
+                "tags": [
+                    "Empresa"
+                ],
+                "summary": "Deshabilita una entidad empresa",
+                "operationId": "d2b7500ab441caa7efc997146f573cd8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la empresa a deshabilitar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/empresa/habilitar/{id}": {
+            "post": {
+                "tags": [
+                    "Empresa"
+                ],
+                "summary": "Habilita una entidad empresa",
+                "operationId": "49545ffe9d06f9d3295e3f26474ed910",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la empresa a habilitar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/rol/list/{estado}": {
+            "get": {
+                "tags": [
+                    "Rol"
+                ],
+                "summary": "Obtiene una lista de roles por estado.",
+                "operationId": "14ea5429b3d23cdb9c4cda4e0da2ac58",
+                "parameters": [
+                    {
+                        "name": "estado",
+                        "in": "path",
+                        "description": "Filtra el rol por estado.",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/rol/buscar/{nombre} ": {
+            "get": {
+                "tags": [
+                    "Rol"
+                ],
+                "summary": "Obtiene una lista de roles por busqueda de nombre.",
+                "operationId": "117900062fb166e14edd4cb3d416f396",
+                "parameters": [
+                    {
+                        "name": "nombre",
+                        "in": "path",
+                        "description": "Realiza una busqueda por el nombre del rol.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/rol/{id}": {
+            "get": {
+                "tags": [
+                    "Rol"
+                ],
+                "summary": "Obtener detalles de un rol por ID",
+                "operationId": "da95f4131c7a9793e4a5692f5f53801e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la rol",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la rol"
+                    },
+                    "404": {
+                        "description": "rol no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Rol"
+                ],
+                "summary": "Actualiza la entidad rol",
+                "operationId": "912366a682e11a5503fbd4df27e5a79d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de rol a actualizar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "Nombre": {
+                                        "type": "string"
+                                    },
+                                    "Descripcion": {
+                                        "type": "string"
+                                    },
+                                    "Permisos": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "IdUsuario": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/rol/permisos/": {
+            "get": {
+                "tags": [
+                    "Rol"
+                ],
+                "summary": "Listado de permisos",
+                "operationId": "a4ebadffa9a6310e1a5488fac8a43045",
+                "responses": {
+                    "200": {
+                        "description": "Listado detalle de permiso"
+                    },
+                    "404": {
+                        "description": "Permiso no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/rol/": {
+            "post": {
+                "tags": [
+                    "Rol"
+                ],
+                "summary": "Crear una nuevo rol",
+                "operationId": "81802298c4930ac383cc457d559ea7a9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "Nombre": {
+                                        "type": "string"
+                                    },
+                                    "Descripcion": {
+                                        "type": "string"
+                                    },
+                                    "Permisos": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "IdUsuario": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/rol/deshabilitar/{id}": {
+            "post": {
+                "tags": [
+                    "Rol"
+                ],
+                "summary": "Deshabilita una entidad rol",
+                "operationId": "70f124142b88d57d0f242c7ca5619bf8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la rol a deshabilitar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/rol/habilitar/{id}": {
+            "post": {
+                "tags": [
+                    "Rol"
+                ],
+                "summary": "Habilita una entidad rol",
+                "operationId": "65de27a3b0ec5d0590dd24f15062dca2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la rol a habilitar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/usuario/list/{estado}": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Obtiene una lista de usuarios por estado.",
+                "operationId": "9b790ad6255ce32b1aeffecf8b1f038f",
+                "parameters": [
+                    {
+                        "name": "estado",
+                        "in": "path",
+                        "description": "Filtra el usuario por estado.",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/usuario/buscar/{filtro}": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Obtiene una lista de Usuarios por busqueda.",
+                "operationId": "bae0fa3012f6e844a31076dce05ecd68",
+                "parameters": [
+                    {
+                        "name": "filtro",
+                        "in": "path",
+                        "description": "Filtra la Usuario por ruc, razon_social, nombre_comercial.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/usuario/perfil/": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Obtiene el perfil del usuario de session.",
+                "operationId": "0f6b557135641dd4d887f75ce68ce650",
+                "responses": {
+                    "400": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/usuario/{id}": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Obtener detalles de un usuario por ID",
+                "operationId": "7321be81ebd57b641e5f6b61346d34d0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de usuario"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Actualiza la entidad usuario",
+                "operationId": "9799579fe271285df9e0502474039614",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la usuario a actualizar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "NombreUsuario": {
+                                        "type": "string"
+                                    },
+                                    "NombreCompleto": {
+                                        "type": "string"
+                                    },
+                                    "IdRol": {
+                                        "type": "integer"
+                                    },
+                                    "Email": {
+                                        "type": "string"
+                                    },
+                                    "Direccion": {
+                                        "type": "string"
+                                    },
+                                    "IdUsuario": {
+                                        "type": "integer"
+                                    },
+                                    "TerminosCondiciones": {
+                                        "type": "string"
+                                    },
+                                    "TerminosCondicionesAcceptacion": {
+                                        "type": "boolean",
+                                        "example": 0
+                                    },
+                                    "Empresas": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/usuario/": {
+            "post": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Crea un nuevo usuario",
+                "operationId": "3094c59f8327e7447b7d285a29f3c683",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "DNI": {
+                                        "type": "string"
+                                    },
+                                    "NombreUsuario": {
+                                        "type": "string"
+                                    },
+                                    "NombreCompleto": {
+                                        "type": "string"
+                                    },
+                                    "IdRol": {
+                                        "type": "integer"
+                                    },
+                                    "Contrasena": {
+                                        "type": "string"
+                                    },
+                                    "Email": {
+                                        "type": "string"
+                                    },
+                                    "Direccion": {
+                                        "type": "string"
+                                    },
+                                    "IdUsuario": {
+                                        "type": "integer"
+                                    },
+                                    "TerminosCondiciones": {
+                                        "type": "string"
+                                    },
+                                    "TerminosCondicionesAcceptacion": {
+                                        "type": "boolean",
+                                        "example": 0
+                                    },
+                                    "Empresas": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/usuario/cambiarpwd/{id}": {
+            "put": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "cambia la contraseña de la entidad usuario",
+                "operationId": "555dadf65c032e29cf440efba244163c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la usuario a actualizar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "PasswordAnterior": {
+                                        "type": "string"
+                                    },
+                                    "PasswordNuevo": {
+                                        "type": "string"
+                                    },
+                                    "IdUsuario": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/usuario/deshabilitar/{id}": {
+            "post": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Deshabilita una entidad usuario",
+                "operationId": "6cd1a779df3da394b8a50fec8f304c0f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la usuario a deshabilitar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/api/usuario/habilitar/{id}": {
+            "post": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Habilita una entidad usuario",
+                "operationId": "0d699e3593ae150e31573485a0ebec01",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la usuario a habilitar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Token": []
+                    },
+                    {
+                        "Session": []
+                    }
+                ]
+            }
+        },
+        "/external/transaccion/": {
+            "post": {
+                "tags": [
+                    "Transaccion"
+                ],
+                "summary": "Crear una nueva transaccion",
+                "operationId": "33dbfd46020e8fc71c96a7f05080191f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "clave_acceso": {
+                                        "type": "string"
+                                    },
+                                    "monto": {
+                                        "type": "number",
+                                        "format": "double"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "APIResponse": {
+                "description": "",
+                "properties": {
+                    "Success": {
+                        "type": "boolean"
+                    },
+                    "Message": {
+                        "type": "string"
+                    },
+                    "Data": {
+                        "type": "object"
+                    },
+                    "Exception": {
+                        "type": "object"
+                    },
+                    "Code": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "Token": {
+                "type": "http",
+                "scheme": "bearer",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "bearerFormat": "JWT",
+                "in": "header"
+            },
+            "Session": {
+                "type": "apiKey",
+                "description": "Enter your session id",
+                "name": "SessionId",
+                "in": "header"
+            },
+            "Apikey": {
+                "type": "apiKey",
+                "description": "Enter your APIKEY for company",
+                "name": "APIKEY",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Empresa"
+        }
+    ]
+}
